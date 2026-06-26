@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import logoSrc from '../assets/Logo.png'
 
 const navLinks = [
   { label: 'About', href: '#about' },
@@ -34,7 +35,7 @@ export default function Navbar() {
           {/* Logo */}
           <a href="#" aria-label="Protein Monkey Home" className="flex-shrink-0">
             <img
-              src="/src/assets/Logo.png"
+              src={logoSrc}
               alt="Protein Monkey logo"
               className="h-10 md:h-12 w-auto"
               style={{ filter: 'brightness(4) saturate(1.1) hue-rotate(12deg)' }}

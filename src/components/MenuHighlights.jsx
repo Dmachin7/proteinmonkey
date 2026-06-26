@@ -1,4 +1,8 @@
 import { motion } from 'framer-motion'
+import imgShake from '../assets/ProteinShake.jpg'
+import imgTea from '../assets/menu-2.jpg'
+import imgWaffles from '../assets/menu-1.jpg'
+import imgSeasonal from '../assets/menu-4.jpg'
 
 const menuItems = [
   {
@@ -6,7 +10,7 @@ const menuItems = [
     title: 'Protein Shakes',
     description:
       `Thick, creamy, and packed with clean protein. Choose from dozens of flavors — because "boring shake" isn't in our vocabulary.`,
-    image: '/src/assets/ProteinShake.jpg',
+    image: imgShake,
     imageAlt: 'Protein shake from Protein Monkey',
     accent: 'from-amber-400/30 to-monkey-orange/10',
     emoji: '🥤',
@@ -16,7 +20,7 @@ const menuItems = [
     title: 'Loaded Teas',
     description:
       'Bold flavor, real energy. Our loaded teas are packed with vitamins and antioxidants — the upgrade your afternoon deserves.',
-    image: '/src/assets/menu-2.jpg',
+    image: imgTea,
     imageAlt: 'Loaded tea from Protein Monkey',
     accent: 'from-green-400/20 to-emerald-300/10',
     emoji: '🧋',
@@ -26,7 +30,7 @@ const menuItems = [
     title: 'Protein Waffles',
     description:
       'Golden, fluffy, and secretly macro-friendly. The waffle you can eat every day and never feel guilty about.',
-    image: '/src/assets/menu-1.jpg',
+    image: imgWaffles,
     imageAlt: 'Protein waffles from Protein Monkey',
     accent: 'from-yellow-300/30 to-amber-200/10',
     emoji: '🧇',
@@ -36,7 +40,7 @@ const menuItems = [
     title: 'Seasonal Specials',
     description:
       `Always something new. We rotate limited items with whatever's fresh, fun, and in season — follow us to stay in the loop.`,
-    image: '/src/assets/menu-4.jpg',
+    image: imgSeasonal,
     imageAlt: 'Seasonal special from Protein Monkey',
     accent: 'from-monkey-orange/20 to-pink-300/10',
     emoji: '✨',

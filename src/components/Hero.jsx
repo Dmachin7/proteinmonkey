@@ -1,9 +1,12 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import logoSrc from '../assets/Logo.png'
+import wafflesVideo from '../assets/Waffles_Video.mov'
+import coffeeVideo from '../assets/Coffee_Video.mov'
 
 const VIDEOS = [
-  '/src/assets/Waffles_Video.mov',
-  '/src/assets/Coffee_Video.mov',
+  wafflesVideo,
+  coffeeVideo,
 ]
 
 const PANEL_SRCS = [
@@ -111,7 +114,7 @@ export default function Hero() {
         {/* Logo */}
         <motion.div {...fadeUp(0)}>
           <img
-            src="/src/assets/Logo.png"
+            src={logoSrc}
             alt="Protein Monkey"
             className="h-24 md:h-32 w-auto mx-auto drop-shadow-2xl"
             style={{ filter: 'brightness(4) saturate(1.1) hue-rotate(12deg)' }}

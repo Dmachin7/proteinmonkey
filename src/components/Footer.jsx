@@ -1,4 +1,5 @@
 import { Instagram, Facebook } from 'lucide-react'
+import logoSrc from '../assets/Logo.png'
 
 const navLinks = [
   { label: 'About', href: '#about' },
@@ -31,7 +32,7 @@ export default function Footer() {
           <div className="flex flex-col gap-4">
             <a href="#" aria-label="Protein Monkey Home">
               <img
-                src="/src/assets/Logo.png"
+                src={logoSrc}
                 alt="Protein Monkey"
                 className="h-10 w-auto"
                 style={{ filter: 'brightness(0) invert(1) sepia(1) saturate(6) hue-rotate(-5deg)' }}

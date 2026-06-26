@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import aboutPhoto from '../assets/about-photo.jpg'
 
 const badges = [
   { label: 'Family Owned', icon: '🏡' },
@@ -66,7 +67,7 @@ export default function About() {
               The styled fallback below will show until the image is in place.
             */}
             <img
-              src="/src/assets/about-photo.jpg"
+              src={aboutPhoto}
               alt="Luis and Emily at Protein Monkey café"
               className="w-full h-full object-cover"
               onError={(e) => {
