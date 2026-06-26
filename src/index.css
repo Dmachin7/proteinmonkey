@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Color tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --color-accent-rgb: 245 166 35;
+  --color-dark-rgb:   59 31 10;
+  --color-light-rgb:  255 248 240;
+  --color-white-rgb:  255 255 255;
+
+  --color-accent: #F5A623;
+  --color-dark:   #3B1F0A;
+  --color-light:  #FFF8F0;
+}
+
+/* ─── Base styles ──────────────────────────────────────────────────────────── */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
