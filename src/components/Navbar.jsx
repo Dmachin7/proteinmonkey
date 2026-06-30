@@ -40,7 +40,7 @@ export default function Navbar() {
             <img
               src={logoSrc}
               alt="Protein Monkey logo"
-              className="h-10 md:h-12 w-auto"
+              className="h-14 md:h-16 w-auto"
               style={{ filter: 'brightness(4) saturate(1.1) hue-rotate(12deg)' }}
             />
           </Link>

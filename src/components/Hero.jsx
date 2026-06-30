@@ -161,7 +161,7 @@ export default function Hero() {
           <img
             src={logoSrc}
             alt="Protein Monkey"
-            className="h-40 sm:h-48 md:h-56 lg:h-64 w-auto mx-auto drop-shadow-2xl"
+            className="h-48 sm:h-56 md:h-64 lg:h-72 w-auto mx-auto drop-shadow-2xl"
             style={{ filter: 'brightness(4) saturate(1.1) hue-rotate(12deg)' }}
           />
         </motion.div>
