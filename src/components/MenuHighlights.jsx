@@ -1,4 +1,5 @@
 import { useRef, useLayoutEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -172,14 +173,12 @@ export default function MenuHighlights() {
           <p className="text-monkey-brown/60 text-sm mb-4">
             Want the full picture?
           </p>
-          <a
-            href="https://www.doordash.com/store/protein-monkey-tampa-23748556/"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/menu"
             className="inline-block bg-monkey-brown text-monkey-cream font-semibold text-sm px-7 py-3 rounded-full hover:bg-monkey-orange hover:text-monkey-brown transition-all duration-200"
           >
-            See Full Menu on DoorDash →
-          </a>
+            See Full Menu →
+          </Link>
         </motion.div>
       </div>
     </section>

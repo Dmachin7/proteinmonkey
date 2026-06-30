@@ -1,12 +1,13 @@
 import { Instagram, Facebook } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import logoSrc from '../assets/Logo.png'
 
 const navLinks = [
-  { label: 'About', href: '#about' },
-  { label: 'Menu', href: '#menu' },
-  { label: 'Reviews', href: '#reviews' },
-  { label: 'Order', href: '#order' },
-  { label: 'Visit Us', href: '#visit' },
+  { label: 'About', href: '/#about' },
+  { label: 'Menu', href: '/menu', isRoute: true },
+  { label: 'Reviews', href: '/#reviews' },
+  { label: 'Order', href: '/#order' },
+  { label: 'Visit Us', href: '/#visit' },
 ]
 
 const socialLinks = [
@@ -30,14 +31,14 @@ export default function Footer() {
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 pb-10 border-b border-white/10">
           {/* Brand Column */}
           <div className="flex flex-col gap-4">
-            <a href="#" aria-label="Protein Monkey Home">
+            <Link to="/" aria-label="Protein Monkey Home">
               <img
                 src={logoSrc}
                 alt="Protein Monkey"
                 className="h-10 w-auto"
                 style={{ filter: 'brightness(0) invert(1) sepia(1) saturate(6) hue-rotate(-5deg)' }}
               />
-            </a>
+            </Link>
             <p className="text-monkey-cream/55 text-sm leading-relaxed max-w-xs">
               Tampa's favorite healthy café. Protein shakes, waffles, green
               juices &amp; more — made fresh every day in West Park Village.
@@ -50,16 +51,27 @@ export default function Footer() {
               Explore
             </h3>
             <ul className="space-y-2">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="text-monkey-cream/60 text-sm hover:text-monkey-orange transition-colors duration-200"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
+              {navLinks.map((link) =>
+                link.isRoute ? (
+                  <li key={link.href}>
+                    <Link
+                      to={link.href}
+                      className="text-monkey-cream/60 text-sm hover:text-monkey-orange transition-colors duration-200"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ) : (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      className="text-monkey-cream/60 text-sm hover:text-monkey-orange transition-colors duration-200"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                )
+              )}
             </ul>
           </div>
 

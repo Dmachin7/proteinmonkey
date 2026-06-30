@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import logoSrc from '../assets/Logo.png'
 
 const navLinks = [
-  { label: 'About', href: '#about' },
-  { label: 'Menu', href: '#menu' },
-  { label: 'Reviews', href: '#reviews' },
-  { label: 'Order', href: '#order' },
-  { label: 'Visit Us', href: '#visit' },
+  { label: 'About', href: '/#about' },
+  { label: 'Menu', href: '/menu', isRoute: true },
+  { label: 'Reviews', href: '/#reviews' },
+  { label: 'Order', href: '/#order' },
+  { label: 'Visit Us', href: '/#visit' },
 ]
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const { pathname } = useLocation()
+  const isSolid = isScrolled || isOpen || pathname !== '/'
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10)
@@ -25,7 +28,7 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled || isOpen
+        isSolid
           ? 'bg-monkey-brown/95 backdrop-blur-md shadow-lg'
           : 'bg-transparent'
       }`}
@@ -33,27 +36,38 @@ export default function Navbar() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <a href="#" aria-label="Protein Monkey Home" className="flex-shrink-0">
+          <Link to="/" aria-label="Protein Monkey Home" className="flex-shrink-0">
             <img
               src={logoSrc}
               alt="Protein Monkey logo"
               className="h-10 md:h-12 w-auto"
               style={{ filter: 'brightness(4) saturate(1.1) hue-rotate(12deg)' }}
             />
-          </a>
+          </Link>
 
           {/* Desktop Nav Links */}
           <ul className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  className="text-monkey-cream font-medium text-sm tracking-wide hover:text-monkey-orange transition-colors duration-200"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
+            {navLinks.map((link) =>
+              link.isRoute ? (
+                <li key={link.href}>
+                  <Link
+                    to={link.href}
+                    className="text-monkey-cream font-medium text-sm tracking-wide hover:text-monkey-orange transition-colors duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ) : (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="text-monkey-cream font-medium text-sm tracking-wide hover:text-monkey-orange transition-colors duration-200"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              )
+            )}
             <li>
               <a
                 href="https://www.doordash.com/store/protein-monkey-tampa-23748556/"
@@ -104,22 +118,39 @@ export default function Navbar() {
             className="md:hidden overflow-hidden bg-monkey-brown border-t border-white/10"
           >
             <ul className="flex flex-col px-6 py-4 gap-1">
-              {navLinks.map((link, i) => (
-                <motion.li
-                  key={link.href}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                >
-                  <a
-                    href={link.href}
-                    onClick={closeMobileMenu}
-                    className="block py-3 text-monkey-cream font-medium text-base hover:text-monkey-orange transition-colors duration-200 border-b border-white/10 last:border-0"
+              {navLinks.map((link, i) =>
+                link.isRoute ? (
+                  <motion.li
+                    key={link.href}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05 }}
                   >
-                    {link.label}
-                  </a>
-                </motion.li>
-              ))}
+                    <Link
+                      to={link.href}
+                      onClick={closeMobileMenu}
+                      className="block py-3 text-monkey-cream font-medium text-base hover:text-monkey-orange transition-colors duration-200 border-b border-white/10 last:border-0"
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.li>
+                ) : (
+                  <motion.li
+                    key={link.href}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                  >
+                    <a
+                      href={link.href}
+                      onClick={closeMobileMenu}
+                      className="block py-3 text-monkey-cream font-medium text-base hover:text-monkey-orange transition-colors duration-200 border-b border-white/10 last:border-0"
+                    >
+                      {link.label}
+                    </a>
+                  </motion.li>
+                )
+              )}
               <motion.li
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
