@@ -3,8 +3,8 @@ import { motion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import logoSrc from '../assets/Logo.png'
-import wafflesVideo from '../assets/Waffles_Video.mov'
-import coffeeVideo from '../assets/Coffee_Video.mov'
+import wafflesVideo from '../assets/Waffles_Video.mp4'
+import coffeeVideo from '../assets/Coffee_Video.mp4'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -91,6 +91,7 @@ export default function Hero() {
         autoPlay
         muted
         playsInline
+        preload="auto"
         onEnded={() => setActiveIdx(1)}
         className={`absolute inset-0 w-full h-full object-cover md:hidden transition-opacity duration-1000 ${
           activeIdx === 0 ? 'opacity-100' : 'opacity-0'
@@ -103,6 +104,7 @@ export default function Hero() {
         src={VIDEOS[1]}
         muted
         playsInline
+        preload="auto"
         onEnded={() => setActiveIdx(0)}
         className={`absolute inset-0 w-full h-full object-cover md:hidden transition-opacity duration-1000 ${
           activeIdx === 1 ? 'opacity-100' : 'opacity-0'
