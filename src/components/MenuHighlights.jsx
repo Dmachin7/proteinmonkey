@@ -14,6 +14,7 @@ gsap.registerPlugin(ScrollTrigger)
 const menuItems = [
   {
     id: 'shakes',
+    menuId: 'shakes',
     title: 'Protein Shakes',
     description:
       `Thick, creamy, and packed with clean protein. Choose from dozens of flavors — because "boring shake" isn't in our vocabulary.`,
@@ -22,6 +23,7 @@ const menuItems = [
   },
   {
     id: 'juices',
+    menuId: 'juice-tea',
     title: 'Loaded Teas',
     description:
       'Bold flavor, real energy. Our loaded teas are packed with vitamins and antioxidants — the upgrade your afternoon deserves.',
@@ -30,6 +32,7 @@ const menuItems = [
   },
   {
     id: 'waffles',
+    menuId: 'waffles',
     title: 'Protein Waffles',
     description:
       'Golden, fluffy, and secretly macro-friendly. The waffle you can eat every day and never feel guilty about.',
@@ -38,6 +41,7 @@ const menuItems = [
   },
   {
     id: 'seasonal',
+    menuId: null,
     title: 'Seasonal Specials',
     description:
       `Always something new. We rotate limited items with whatever's fresh, fun, and in season — follow us to stay in the loop.`,
@@ -74,26 +78,28 @@ function MenuCard({ item }) {
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       style={{ transformPerspective: 800 }}
-      className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer will-change-transform"
+      className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 will-change-transform"
     >
-      {/* Image */}
-      <div className="relative aspect-[4/3] overflow-hidden">
-        <img
-          src={item.image}
-          alt={item.imageAlt}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-      </div>
+      <Link to={item.menuId ? `/menu#${item.menuId}` : '/menu'} className="block cursor-pointer">
+        {/* Image */}
+        <div className="relative aspect-[4/3] overflow-hidden">
+          <img
+            src={item.image}
+            alt={item.imageAlt}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        </div>
 
-      {/* Content */}
-      <div className="p-5">
-        <h3 className="text-monkey-brown font-bold text-lg mb-2 group-hover:text-monkey-orange transition-colors duration-200">
-          {item.title}
-        </h3>
-        <p className="text-monkey-brown/65 text-sm leading-relaxed">
-          {item.description}
-        </p>
-      </div>
+        {/* Content */}
+        <div className="p-5">
+          <h3 className="text-monkey-brown font-bold text-lg mb-2 group-hover:text-monkey-orange transition-colors duration-200">
+            {item.title}
+          </h3>
+          <p className="text-monkey-brown/65 text-sm leading-relaxed">
+            {item.description}
+          </p>
+        </div>
+      </Link>
     </motion.article>
   )
 }
