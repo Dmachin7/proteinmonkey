@@ -116,32 +116,14 @@ export default function Hero() {
           <img
             src={logoSrc}
             alt="Protein Monkey"
-            className="h-24 md:h-32 w-auto mx-auto drop-shadow-2xl"
+            className="h-40 sm:h-48 md:h-56 lg:h-64 w-auto mx-auto drop-shadow-2xl"
             style={{ filter: 'brightness(4) saturate(1.1) hue-rotate(12deg)' }}
           />
         </motion.div>
 
-        {/* Headline */}
-        <motion.h1
-          {...fadeUp(0.2)}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight tracking-tight"
-        >
-          Fuel Your Life.{' '}
-          <span className="text-monkey-orange">Guilt Free.</span>
-        </motion.h1>
-
-        {/* Subheadline */}
-        <motion.p
-          {...fadeUp(0.4)}
-          className="text-base sm:text-lg md:text-xl text-white/85 max-w-2xl leading-relaxed font-light"
-        >
-          Tampa's favorite healthy café — protein shakes, waffles, green juices
-          &amp; more.
-        </motion.p>
-
         {/* CTA Buttons */}
         <motion.div
-          {...fadeUp(0.6)}
+          {...fadeUp(0.2)}
           className="flex flex-col sm:flex-row gap-4 mt-2"
         >
           <a
@@ -159,14 +141,6 @@ export default function Hero() {
             Order on DoorDash
           </a>
         </motion.div>
-
-        {/* Location badge */}
-        <motion.p
-          {...fadeUp(0.75)}
-          className="text-white/50 text-sm font-medium tracking-widest uppercase mt-2"
-        >
-          West Park Village · Westchase · Tampa, FL
-        </motion.p>
       </div>
 
       {/* Scroll indicator */}
