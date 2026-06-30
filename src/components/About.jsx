@@ -1,5 +1,10 @@
+import { useRef, useLayoutEffect } from 'react'
 import { motion } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import aboutPhoto from '../assets/about-photo.jpg'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const badges = [
   { label: 'Family Owned', icon: '🏡' },
@@ -13,6 +18,54 @@ const fadeUp = {
 }
 
 export default function About() {
+  const imgWrapRef = useRef(null)
+  const wipeRef = useRef(null)
+  const photoRef = useRef(null)
+  const underlineRef = useRef(null)
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.set(photoRef.current, { scale: 1.18 })
+
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: imgWrapRef.current,
+          start: 'top 78%',
+          toggleActions: 'play none none none',
+        },
+      })
+        .to(wipeRef.current, {
+          scaleX: 0,
+          duration: 1.1,
+          ease: 'power3.inOut',
+          transformOrigin: 'right',
+        })
+        .to(photoRef.current, {
+          scale: 1,
+          duration: 1.3,
+          ease: 'power3.out',
+        }, '-=1.0')
+
+      gsap.fromTo(
+        underlineRef.current,
+        { scaleX: 0 },
+        {
+          scaleX: 1,
+          duration: 0.6,
+          ease: 'power2.out',
+          transformOrigin: 'left',
+          scrollTrigger: {
+            trigger: underlineRef.current,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        }
+      )
+    })
+
+    return () => ctx.revert()
+  }, [])
+
   return (
     <section id="about" className="bg-monkey-cream py-20 md:py-28 px-6">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center">
@@ -28,6 +81,11 @@ export default function About() {
           <p className="text-monkey-orange font-semibold text-sm tracking-widest uppercase mb-3">
             Our Story
           </p>
+          <span
+            ref={underlineRef}
+            className="block w-10 h-px bg-monkey-orange mb-5 origin-left"
+            aria-hidden="true"
+          />
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-monkey-brown leading-tight mb-6">
             Real Food. Real People. Right Here in Tampa.
           </h2>
@@ -61,36 +119,22 @@ export default function About() {
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.15 }}
           className="order-1 md:order-2"
         >
-          <div className="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl">
-            {/*
-              TODO: drop the real about photo at src/assets/about-photo.jpg
-              The styled fallback below will show until the image is in place.
-            */}
+          <div ref={imgWrapRef} className="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl">
             <img
+              ref={photoRef}
               src={aboutPhoto}
               alt="Luis and Emily at Protein Monkey café"
               className="w-full h-full object-cover"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none'
-                e.currentTarget.nextSibling.style.display = 'flex'
-              }}
             />
-            {/* Fallback placeholder */}
+            {/* Wipe reveal panel */}
             <div
-              className="absolute inset-0 bg-gradient-to-br from-monkey-orange to-amber-600 hidden items-center justify-center"
+              ref={wipeRef}
+              className="absolute inset-0 bg-monkey-brown origin-right"
               aria-hidden="true"
-            >
-              <div className="text-center text-monkey-white/80 p-8">
-                <div className="text-6xl mb-4">🐒</div>
-                <p className="font-semibold text-lg">Photo coming soon</p>
-                <p className="text-sm opacity-70 mt-1">
-                  Drop about-photo.jpg in src/assets/
-                </p>
-              </div>
-            </div>
+            />
 
             {/* Decorative corner accent */}
-            <div className="absolute bottom-0 right-0 w-24 h-24 bg-monkey-orange/20 rounded-tl-full" />
+            <div className="absolute bottom-0 right-0 w-24 h-24 bg-monkey-orange/20 rounded-tl-full pointer-events-none" />
           </div>
 
           {/* Decorative offset box */}

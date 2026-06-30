@@ -1,8 +1,12 @@
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useLayoutEffect } from 'react'
 import { motion } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import logoSrc from '../assets/Logo.png'
 import wafflesVideo from '../assets/Waffles_Video.mov'
 import coffeeVideo from '../assets/Coffee_Video.mov'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const VIDEOS = [
   wafflesVideo,
@@ -28,6 +32,9 @@ export default function Hero() {
   const ref0 = useRef(null)
   const ref1 = useRef(null)
   const videoRefs = [ref0, ref1]
+  const sectionRef = useRef(null)
+  const videoLayerRef = useRef(null)
+  const contentRef = useRef(null)
 
   useEffect(() => {
     videoRefs.forEach((ref, i) => {
@@ -41,8 +48,42 @@ export default function Hero() {
     })
   }, [activeIdx])
 
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      // Background video layer drifts + scales slightly faster than scroll for depth
+      gsap.to(videoLayerRef.current, {
+        yPercent: 18,
+        scale: 1.08,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      })
+
+      // Logo + CTA fade/scale out as the hero scrolls away
+      gsap.to(contentRef.current, {
+        opacity: 0,
+        y: -60,
+        scale: 0.94,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: '60% top',
+          scrub: true,
+        },
+      })
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-monkey-brown">
+    <section ref={sectionRef} className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-monkey-brown">
+      <div ref={videoLayerRef} className="absolute inset-0">
       {/* Video 0 — Waffles */}
       <video
         ref={ref0}
@@ -87,6 +128,7 @@ export default function Hero() {
           </div>
         ))}
       </div>
+      </div>
 
       {/* Flat dark overlay — keeps text readable over any video frame */}
       <div className="absolute inset-0 bg-black/45 pointer-events-none" />
@@ -110,7 +152,7 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center flex flex-col items-center gap-6 pt-24 pb-16">
+      <div ref={contentRef} className="relative z-10 max-w-4xl mx-auto px-6 text-center flex flex-col items-center gap-6 pt-24 pb-16">
         {/* Logo */}
         <motion.div {...fadeUp(0)}>
           <img

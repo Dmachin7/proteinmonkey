@@ -1,8 +1,14 @@
+import { useRef, useLayoutEffect } from 'react'
 import { motion } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import useTilt from '../hooks/useTilt'
 import imgShake from '../assets/ProteinShake.jpg'
 import imgTea from '../assets/menu-2.jpg'
 import imgWaffles from '../assets/menu-1.jpg'
 import imgSeasonal from '../assets/menu-4.jpg'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const menuItems = [
   {
@@ -12,8 +18,6 @@ const menuItems = [
       `Thick, creamy, and packed with clean protein. Choose from dozens of flavors — because "boring shake" isn't in our vocabulary.`,
     image: imgShake,
     imageAlt: 'Protein shake from Protein Monkey',
-    accent: 'from-amber-400/30 to-monkey-orange/10',
-    emoji: '🥤',
   },
   {
     id: 'juices',
@@ -22,8 +26,6 @@ const menuItems = [
       'Bold flavor, real energy. Our loaded teas are packed with vitamins and antioxidants — the upgrade your afternoon deserves.',
     image: imgTea,
     imageAlt: 'Loaded tea from Protein Monkey',
-    accent: 'from-green-400/20 to-emerald-300/10',
-    emoji: '🧋',
   },
   {
     id: 'waffles',
@@ -32,8 +34,6 @@ const menuItems = [
       'Golden, fluffy, and secretly macro-friendly. The waffle you can eat every day and never feel guilty about.',
     image: imgWaffles,
     imageAlt: 'Protein waffles from Protein Monkey',
-    accent: 'from-yellow-300/30 to-amber-200/10',
-    emoji: '🧇',
   },
   {
     id: 'seasonal',
@@ -42,8 +42,6 @@ const menuItems = [
       `Always something new. We rotate limited items with whatever's fresh, fun, and in season — follow us to stay in the loop.`,
     image: imgSeasonal,
     imageAlt: 'Seasonal special from Protein Monkey',
-    accent: 'from-monkey-orange/20 to-pink-300/10',
-    emoji: '✨',
   },
 ]
 
@@ -66,10 +64,16 @@ const cardVariants = {
 }
 
 function MenuCard({ item }) {
+  const { ref: tiltRef, onMouseMove, onMouseLeave } = useTilt(8)
+
   return (
     <motion.article
       variants={cardVariants}
-      className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+      ref={tiltRef}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      style={{ transformPerspective: 800 }}
+      className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer will-change-transform"
     >
       {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden">
@@ -77,24 +81,7 @@ function MenuCard({ item }) {
           src={item.image}
           alt={item.imageAlt}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          onError={(e) => {
-            e.currentTarget.style.display = 'none'
-            e.currentTarget.nextSibling.style.display = 'flex'
-          }}
         />
-        {/* Fallback placeholder */}
-        <div
-          className={`absolute inset-0 bg-gradient-to-br ${item.accent} hidden items-center justify-center bg-monkey-cream`}
-          aria-hidden="true"
-        >
-          <div className="text-center">
-            <div className="text-5xl mb-2">{item.emoji}</div>
-            <p className="text-monkey-brown/50 text-xs font-medium">
-              {/* TODO: drop {item.id} photo in src/assets/menu-{item.id}.jpg */}
-              Photo coming soon
-            </p>
-          </div>
-        </div>
       </div>
 
       {/* Content */}
@@ -111,6 +98,29 @@ function MenuCard({ item }) {
 }
 
 export default function MenuHighlights() {
+  const underlineRef = useRef(null)
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        underlineRef.current,
+        { scaleX: 0 },
+        {
+          scaleX: 1,
+          duration: 0.6,
+          ease: 'power2.out',
+          transformOrigin: 'left',
+          scrollTrigger: {
+            trigger: underlineRef.current,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        }
+      )
+    })
+    return () => ctx.revert()
+  }, [])
+
   return (
     <section id="menu" className="bg-white py-20 md:py-28 px-6">
       <div className="max-w-6xl mx-auto">
@@ -125,6 +135,11 @@ export default function MenuHighlights() {
           <p className="text-monkey-orange font-semibold text-sm tracking-widest uppercase mb-3">
             The Menu
           </p>
+          <span
+            ref={underlineRef}
+            className="block w-10 h-px bg-monkey-orange mx-auto mb-5 origin-left"
+            aria-hidden="true"
+          />
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-monkey-brown">
             What We're Making
           </h2>

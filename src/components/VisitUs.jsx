@@ -1,5 +1,10 @@
+import { useRef, useLayoutEffect } from 'react'
 import { motion } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { MapPin, Phone, Clock } from 'lucide-react'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const hours = [
   { day: 'Monday', open: '9:00 AM', close: '5:00 PM' },
@@ -17,6 +22,29 @@ const fadeUp = {
 }
 
 export default function VisitUs() {
+  const underlineRef = useRef(null)
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        underlineRef.current,
+        { scaleX: 0 },
+        {
+          scaleX: 1,
+          duration: 0.6,
+          ease: 'power2.out',
+          transformOrigin: 'left',
+          scrollTrigger: {
+            trigger: underlineRef.current,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        }
+      )
+    })
+    return () => ctx.revert()
+  }, [])
+
   return (
     <section id="visit" className="bg-monkey-cream py-20 md:py-28 px-6">
       <div className="max-w-6xl mx-auto">
@@ -31,6 +59,11 @@ export default function VisitUs() {
           <p className="text-monkey-orange font-semibold text-sm tracking-widest uppercase mb-3">
             Find Us
           </p>
+          <span
+            ref={underlineRef}
+            className="block w-10 h-px bg-monkey-orange mx-auto mb-5 origin-left"
+            aria-hidden="true"
+          />
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-monkey-brown">
             Visit Us
           </h2>
