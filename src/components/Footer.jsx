@@ -18,8 +18,7 @@ const socialLinks = [
   },
   {
     label: 'Facebook',
-    // TODO: replace href with real Facebook page URL when available
-    href: '#',
+    href: 'https://www.facebook.com/proteinmonkey/',
     Icon: Facebook,
   },
 ]
